@@ -16,19 +16,22 @@ public class RegistroDeProducto {
 
 	public static void main(String[] args) {
 		Categoria celulares= new Categoria("Celulares");
-		Producto celular = new Producto("Samsung", "celular usado",new BigDecimal(1000), celulares);
 		
 		EntityManager em = JPAUtils.getEntityManager();
-		
-		ProductoDAO productoDAO = new ProductoDAO(em);
-		CategoriaDAO categoriaDAO = new CategoriaDAO(em);
+
 		
 		em.getTransaction().begin();
 		
-		categoriaDAO.guardar(celulares);
-		productoDAO.guardar(celular);
-		em.getTransaction().commit();
-		em.close();
+		em.persist(celulares);
+		
+		celulares.setNombre("Libros");
+		
+		em.flush();
+		em.clear();
+		
+		celulares = em.merge(celulares);
+		celulares.setNombre("Software");
+		em.flush();
 	}
 
 }
