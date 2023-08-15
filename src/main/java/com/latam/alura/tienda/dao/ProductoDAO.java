@@ -31,4 +31,9 @@ public class ProductoDAO {
 		String jpql = "SELECT P FROM Producto AS P WHERE P.nombre =: nombre ";
 		return em.createQuery(jpql).setParameter("nombre", nombre).getResultList();
 	}
+	
+	public List<Producto> consultaPorCategoria(String nombre){
+		String jpql = "SELECT P FROM Producto AS P WHERE P.categoria.nombre =: nombre";
+		return em.createQuery(jpql).setParameter("nombre", nombre).getResultList();
+	}
 }
